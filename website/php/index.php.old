@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<!-- @author: Peter Kydas
+	 @desc: Web-based management for controlling the Pi's AP
+-->
+
+<?php 
+
+	$valid_passwords = array('admin' => 'test');
+	$valid_users = array_keys($valid_passwords);
+
+	$user = $_SERVER['PHP_AUTH_USER'];
+	$pass = $_SERVER['PHP_AUTH_PW'];
+
+	$validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
+
+	$_SESSION[validated] = $validated;
+	
+	//No credentials entered
+	if (!$validated){
+		header('WWW-Authenticate: Basic realm=Pi-Web'); //Change realm?
+		header('HTTP/1.0 401 Unauthorized');
+		die("Invalid username and password");
+	} 
+
+	echo "<p>Hello {$user}.</p>";
+	echo "<p>You are in the system!</p>";
+
+?>
+
+<html>
+
+    <head>
+    	<?php require('../php/header.php'); ?>
+        
+        <!-- Custom style sheet -->
+        
+        
+        <title>Pi Web</title>
+    </head>
+
+    <body>
+        This is a test.
+
+
+        <?php require('../php/js_includes.php');?>
+    </body>
+
+</html>
