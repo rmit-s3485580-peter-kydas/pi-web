@@ -7,14 +7,14 @@
 
       session_start(); 
 
-      $GLOBALS['linksActive'] = array(
+      $linksActive = array(
         "dashboard" => false,
         "data_usage" => false,
         "users" => false,
         "wifi_config" => false,
         "nfc" => false);
 
-      $GLOBALS['links'] = array(
+      $links = array(
         "dashboard" => "Dashboard.php",
         "data_usage" => "UsageData.php",
         "users" => "Users.php",
@@ -22,17 +22,17 @@
         "nfc" => "NFC.php"
         );
 
-      function setActive(String $link){
-        foreach($GLOBALS['linksActive'] as $key => $value){
+      function setActive(String $link, &$linksActive){
+        foreach($linksActive as $key => $value){
           if ($key == $link)
-            $GLOBALS['linksActive'][$key] = true;
+            $linksActive[$key] = true;
           else
-            $GLOBALS['linksActive'][$key] = false;
+            $linksActive[$key] = false;
         }
       }
 
-      function getActive(String $link){
-        if ($GLOBALS['linksActive'][$link]){
+      function getActive(String $link, &$linksActive){
+        if ($linksActive[$link]){
           echo "\"nav-item active\"";
         }
         else {
@@ -40,19 +40,23 @@
         }
       }
 
-      function getURL(){
-        foreach($GLOBALS['linksActive'] as $key => $value){
+      function getURL(&$linksActive, &$links){
+        foreach($linksActive as $key => $value){
           if ($value){
-            echo $GLOBALS['links'][$key];
+            echo $links[$key];
             return;
           }
         }
       }
 
-      setActive("dashboard");
+      setActive("dashboard", $linksActive);
 
-      if(!isset($_GET)){
-        setActive("dashboard");
+      if (isset($_GET['link']) && array_key_exists($_GET['link'], $links)){
+        setActive($_GET['link'], $linksActive);
+      }
+
+      else{
+        setActive("dashboard", $linksActive);
       }
 
       if (isset($_SESSION['validated']) && $_SESSION['validated'] == false) {
@@ -94,23 +98,23 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-          <li class=<?php getActive("dashboard");?> data-toggle="tooltip" data-placement="right" title="Dashboard">
-            <a class="nav-link" href="#">
+          <li class=<?php getActive("dashboard", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link" href="index.php?link=dashboard">
               <i class="fa fa-fw fa-dashboard"></i>
               <span class="nav-link-text">
                 Dashboard</span>
             </a>
           </li>
           
-          <li class=<?php getActive("data_usage");?> data-toggle="tooltip" data-placement="right" title="Data Usage">
-            <a class="nav-link" href="#">
+          <li class=<?php getActive("data_usage", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Data Usage">
+            <a class="nav-link" href="index.php?link=data_usage">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">
                 Data Usage</span>
             </a>
           </li>
-          <li class=<?php getActive("users");?> data-toggle="tooltip" data-placement="right" title="Connected Users">
-            <a class="nav-link" href="#">
+          <li class=<?php getActive("users", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Connected Users">
+            <a class="nav-link" href="index.php?link=users">
               <i class="fa fa-fw fa-table"></i>
               <span class="nav-link-text">
                 Connected Users</span>
@@ -124,10 +128,10 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseComponents">
               <li>
-                <a class=<?php getActive("wifi_config");?> href="#">WiFi Hotspot</a>
+                <a class=<?php getActive("wifi_config", $linksActive);?> href="index.php?link=wifi_config">WiFi Hotspot</a>
               </li>
               <li>
-                <a class=<?php getActive("nfc");?> href="#">NFC</a>
+                <a class=<?php getActive("nfc", $linksActive);?> href="index.php?link=nfc">NFC</a>
               </li>
             </ul>
           </li>
@@ -154,7 +158,7 @@
         </ol>
       </div>
 
-      <iframe src=<?php getUrl();?> name="main_iframe" style="border:none;" width="100%" height="100%"></iframe>
+      <iframe src=<?php getUrl($linksActive, $links);?> name="main_iframe" style="border:none;" width="100%" height="100%"></iframe>
     </div>
     <!-- /.content-wrapper -->
 
