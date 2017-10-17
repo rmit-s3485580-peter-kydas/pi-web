@@ -16,7 +16,6 @@
 					// $end = strpos($user, ")", $pos);
 					echo substr($user, $pos, 13);
 				}
-				echo $user;
 				echo "<br>";	
 			}
 		}
