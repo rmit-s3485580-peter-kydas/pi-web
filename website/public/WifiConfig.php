@@ -97,7 +97,7 @@ input[type=text]{
 		fclose($newFile);
 
 		$result = array();
-		exec("sudo systemctl restart hostapd", $result);
+		exec("sudo systemctl restart hostapd 2>&1", $result);
 		print_r($result);
 
 		// print_r($lines);
