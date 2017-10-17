@@ -72,7 +72,7 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Pi-Web - Management Console</title>
+    <title>PowerFI - Management Console</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -92,7 +92,7 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <a class="navbar-brand" href="#">Pi-Web</a>
+      <a class="navbar-brand" href="#">PowerFI</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -106,13 +106,13 @@
             </a>
           </li>
           
-          <li class=<?php getActive("data_usage", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Data Usage">
+          <!--<li class=<?php getActive("data_usage", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Data Usage">
             <a class="nav-link" href="index.php?link=data_usage">
               <i class="fa fa-fw fa-area-chart"></i>
               <span class="nav-link-text">
                 Data Usage</span>
             </a>
-          </li>
+          </li>-->
           <li class=<?php getActive("users", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Connected Users">
             <a class="nav-link" href="index.php?link=users">
               <i class="fa fa-fw fa-table"></i>
@@ -120,6 +120,16 @@
                 Connected Users</span>
             </a>
           </li>
+
+            <li class=<?php getActive("wifi_config", $linksActive);?> data-toggle="tooltip" data-placement="right" title="Hotspot Configuration">
+            <a class="nav-link" href="index.php?link=wifi_config">
+              <i class="fa fa-fw fa-wrench"></i>
+              <span class="nav-link-text">
+                Configuration</span>
+            </a>
+          </li>
+
+          <!--
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Configuration">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-wrench"></i>
@@ -135,6 +145,7 @@
               </li>
             </ul>
           </li>
+          -->
 
           <li class="nav-item">
             <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
@@ -158,7 +169,7 @@
         </ol>
       </div>
 
-      <iframe src=<?php getUrl($linksActive, $links);?> name="main_iframe" style="border:none;" width="100%" height="100%"></iframe>
+      <iframe src=<?php getUrl($linksActive, $links);?> name="main_iframe" style="border:none; position:fixed;" width="100%" height="100%"></iframe>
     </div>
     <!-- /.content-wrapper -->
 
